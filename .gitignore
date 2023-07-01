@@ -4,3 +4,5 @@
 *.ipynb_out
 *.ipynb_bak
 *.ipynb_temp
+*.png
+images/
