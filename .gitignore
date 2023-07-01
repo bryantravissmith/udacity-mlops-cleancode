@@ -1,0 +1,6 @@
+*.ipynb_checkpoints
+*.ipynb_history
+*.ipynb_metadata
+*.ipynb_out
+*.ipynb_bak
+*.ipynb_temp
