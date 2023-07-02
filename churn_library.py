@@ -20,23 +20,23 @@ os.environ["QT_QPA_PLATFORM"]="offscreen"
 
 CATEGORICAL_COLS = [
     "Gender", "Education_Level", "Marital_Status", "Income_Category",
-    "Card_Category"                
+    "Card_Category"
 ]
 
 QUANTIATIVE_COLS = [
     "Customer_Age",
-    "Dependent_count", 
+    "Dependent_count",
     "Months_on_book",
-    "Total_Relationship_Count", 
+    "Total_Relationship_Count",
     "Months_Inactive_12_mon",
-    "Contacts_Count_12_mon", 
-    "Credit_Limit", 
+    "Contacts_Count_12_mon",
+    "Credit_Limit",
     "Total_Revolving_Bal",
-    "Avg_Open_To_Buy", 
-    "Total_Amt_Chng_Q4_Q1", 
+    "Avg_Open_To_Buy",
+    "Total_Amt_Chng_Q4_Q1",
     "Total_Trans_Amt",
-    "Total_Trans_Ct", 
-    "Total_Ct_Chng_Q4_Q1", 
+    "Total_Trans_Ct",
+    "Total_Ct_Chng_Q4_Q1",
     "Avg_Utilization_Ratio"
 ]
 
@@ -46,7 +46,7 @@ FEATURES_TO_KEEP = [
     'Contacts_Count_12_mon', 'Credit_Limit', 'Total_Revolving_Bal',
     'Avg_Open_To_Buy', 'Total_Amt_Chng_Q4_Q1', 'Total_Trans_Amt',
     'Total_Trans_Ct', 'Total_Ct_Chng_Q4_Q1', 'Avg_Utilization_Ratio',
-    'Gender_Churn', 'Education_Level_Churn', 'Marital_Status_Churn', 
+    'Gender_Churn', 'Education_Level_Churn', 'Marital_Status_Churn',
     'Income_Category_Churn', 'Card_Category_Churn'
 ]
 
@@ -82,7 +82,7 @@ def perform_eda(df, output_path="./images/"):
     print(f"DataFrame Shape: {df.shape}\n")
     print(f"DataFrame Null Counts:\n {df.isnull().sum()}\n")
     print(f"DataFrame Description:\n {df.describe()}\n")
-    
+
     print("Saving Churn Histogram")
     df["Churn"].hist(figsize=(20,10))
     plt.savefig(os.path.join(output_path,"churn_histogram.png"))
@@ -98,12 +98,12 @@ def perform_eda(df, output_path="./images/"):
     plt.savefig(os.path.join(output_path,"marital_status_bar.png"))
 
     print("Saving Total Trans COunt Density Chart")
-    plt.figure(figsize=(20,10)) 
+    plt.figure(figsize=(20,10))
     sns.histplot(df['Total_Trans_Ct'], stat='density', kde=True)
     plt.savefig(os.path.join(output_path,"total_trans_count_density.png"))
 
     print("Saving Correlation Heatmap")
-    plt.figure(figsize=(20,10)) 
+    plt.figure(figsize=(20,10))
     sns.heatmap(df.corr(), annot=False, cmap="Dark2_r", linewidths = 2)
     plt.savefig(os.path.join(output_path,"correlation_heatmap.png"))
 
@@ -134,7 +134,7 @@ def encoder_helper(df, category_lst, response='Churn'):
         return df
 
     except AssertionError as err:
-        print("""Inputs of wrong type. 
+        print("""Inputs of wrong type.
                  Expected pd.DataFrame, List, str[Optional]""")
         raise err
     except KeyError as err:
@@ -171,12 +171,12 @@ def perform_feature_engineering(df, response='Churn'):
         return X_train, X_test, y_train, y_test
 
     except AssertionError as err:
-        print("""Inputs of wrong type. 
+        print("""Inputs of wrong type.
                  Expected pd.DataFrame, str[Optional]""")
         raise err
 
     except KeyError as err:
-        print("response not in Data Frame")
+        print("Expected columns not in Data Frame")
         raise err
 
 def classification_report_image(y_train,
@@ -199,7 +199,7 @@ def classification_report_image(y_train,
 
     output:
              None
-    """    
+    """
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
@@ -244,13 +244,13 @@ def feature_importance_plot(model, X_data, output_path):
     except AttributeError as err:
         print("Model doesn't have feature importances")
         raise err
-    
+
     try:
         assert isinstance(X_data, pd.DataFrame)
     except AssertionError as err:
         print('X_data should be pandas DataFrame')
         raise err
-    
+
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
@@ -283,7 +283,7 @@ def train_models(X_train, X_test, y_train, y_test, model_path="./models", image_
     rfc = RandomForestClassifier(random_state=42)
     lrc = LogisticRegression(solver='lbfgs', max_iter=3000)
 
-    param_grid = { 
+    param_grid = {
         'n_estimators': [200, 500],
         'max_features': ['auto', 'sqrt'],
         'max_depth' : [4,5,100],
@@ -319,14 +319,14 @@ def train_models(X_train, X_test, y_train, y_test, model_path="./models", image_
                                 y_test_preds_lr,
                                 y_test_preds_rf,
                                 output_path=image_path)
-    
+
     feature_importance_plot(cv_rfc.best_estimator_,
                             X_test,
                             output_path=image_path)
-    
+
     if not os.path.exists(model_path):
         os.makedirs(model_path)
-    
+
     joblib.dump(cv_rfc.best_estimator_,
                 os.path.join(model_path,'rfc_model.pkl'))
     joblib.dump(lrc,

@@ -6,5 +6,7 @@
 *.ipynb_temp
 *.png
 *.pkl
+*.log
 images/
 models/
+__pycache__
