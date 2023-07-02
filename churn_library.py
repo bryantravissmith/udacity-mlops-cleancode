@@ -84,28 +84,38 @@ def perform_eda(dataframe, output_path="./images/"):
     print(f"DataFrame Description:\n {dataframe.describe()}\n")
 
     print("Saving Churn Histogram")
+    plt.clf()
     dataframe["Churn"].hist(figsize=(20, 10))
     plt.savefig(os.path.join(output_path, "churn_histogram.png"))
+    plt.close()
 
     print("Saving Cusomer Age Histogram")
+    plt.clf()
     dataframe["Customer_Age"].hist(figsize=(20, 10))
     plt.savefig(os.path.join(output_path, "customer_age_histogram.png"))
+    plt.close()
 
     print("Saving Marital Status Bar Chart")
+    plt.clf()
     dataframe.Marital_Status.value_counts("normalize").plot(
         kind="bar", figsize=(20, 10)
     )
     plt.savefig(os.path.join(output_path, "marital_status_bar.png"))
+    plt.close()
 
-    print("Saving Total Trans COunt Density Chart")
+    print("Saving Total Trans Count Density Chart")
+    plt.clf()
     plt.figure(figsize=(20, 10))
     sns.histplot(dataframe['Total_Trans_Ct'], stat='density', kde=True)
     plt.savefig(os.path.join(output_path, "total_trans_count_density.png"))
+    plt.close()
 
     print("Saving Correlation Heatmap")
+    plt.clf()
     plt.figure(figsize=(20, 10))
     sns.heatmap(dataframe.corr(), annot=False, cmap="Dark2_r", linewidths=2)
     plt.savefig(os.path.join(output_path, "correlation_heatmap.png"))
+    plt.close()
 
 
 def encoder_helper(dataframe, category_lst, response='Churn'):
@@ -206,7 +216,8 @@ def classification_report_image(y_train,
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
-    plt.rc('figure', figsize=(5, 5))
+    plt.clf()
+    plt.figure(figsize=(5,5))
     plt.text(0.01, 1.25, str('Random Forest Train'),
              {'fontsize': 10}, fontproperties='monospace')
     plt.text(0.01, 0.05, str(classification_report(y_test, y_test_preds_rf)),
@@ -217,8 +228,10 @@ def classification_report_image(y_train,
              {'fontsize': 10}, fontproperties='monospace')
     plt.axis('off')
     plt.savefig(os.path.join(output_path, 'randomforest_report.png'))
+    plt.close()
 
-    plt.rc('figure', figsize=(5, 5))
+    plt.clf()
+    plt.figure(figsize=(5,5))
     plt.text(0.01, 1.25, str('Logistic Regression Train'),
              {'fontsize': 10}, fontproperties='monospace')
     plt.text(0.01, 0.05, str(classification_report(y_train, y_train_preds_lr)),
@@ -229,6 +242,7 @@ def classification_report_image(y_train,
              {'fontsize': 10}, fontproperties='monospace')
     plt.axis('off')
     plt.savefig(os.path.join(output_path, 'logisticregression_report.png'))
+    plt.close()
 
 
 def feature_importance_plot(model, x_data, output_path):
@@ -262,12 +276,14 @@ def feature_importance_plot(model, x_data, output_path):
     names = [x_data.columns[i] for i in indices]
 
     # Create plot
+    plt.clf()
     plt.figure(figsize=(20, 5))
     plt.title("Feature Importance")
     plt.ylabel('Importance')
     plt.bar(range(x_data.shape[1]), importances[indices])
     plt.xticks(range(x_data.shape[1]), names, rotation=90)
     plt.savefig(os.path.join(output_path, 'feature_importance.png'))
+    plt.close()
 
 
 def train_models(
@@ -315,11 +331,13 @@ def train_models(
 
     lrc_plot = plot_roc_curve(lrc, x_test, y_test)
 
+    plt.clf()
     plt.figure(figsize=(15, 8))
     axis = plt.gca()
     plot_roc_curve(cv_rfc.best_estimator_, x_test, y_test, ax=axis, alpha=0.8)
     lrc_plot.plot(ax=axis, alpha=0.8)
     plt.savefig(os.path.join(image_path, 'model_roc.png'))
+    plt.close()
 
     classification_report_image(y_train,
                                 y_test,
