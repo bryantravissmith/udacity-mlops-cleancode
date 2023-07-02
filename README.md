@@ -28,7 +28,7 @@ Use the following comments to start jupyter labs to run the notebook and
 interactively run the code
 
 ```
-docker build -t mlops-cleancode-jupyterlab -f Dockerfile.jupyterlab .
+docker build -t mlops-cleancode-jupyterlab -f Dockerfile.jypyterlab .
 docker run -it --rm -p 8888:8888 -v $(pwd):/app mlops-cleancode-jupyterlab
 ```
 
