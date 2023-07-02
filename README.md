@@ -10,16 +10,18 @@ use the original environemnt for the notebook.
 ## Files and data description
 There are the following files:
 
-`churn_notebook.ipynb` - the originial notebook
-`churn_libray.py` - libary to reproduces the originial model
-`churn_script_logging_and_test.py` - the tests for the library
+-- `churn_notebook.ipynb` - the originial notebook
+
+-- `churn_libray.py` - libary to reproduces the originial model
+
+-- `churn_script_logging_and_test.py` - the tests for the library
 
 The data is stored as a csv in the `data/` directory.   The outputs of the code
 are in each directory:
 
-`images/` - EDA and Model Performance plots
-`modesl/` - The best fit models
-`logs/` - logs for the tests
+-- `images/` - EDA and Model Performance plots
+-- `modesl/` - The best fit models
+-- `logs/` - logs for the tests
 
 ## Running Files
 This code is run with docker containers to reporduce the original environement.
