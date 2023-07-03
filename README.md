@@ -29,6 +29,12 @@ are in each directory:
 ## Running Files
 This code is run with docker containers to reporduce the original environement.
 
+The full model run can be run with the following commands
+```
+docker build -t mlops-cleancode-run -f Dockerfile.run .
+docker run -it --rm mlops-cleancode-run
+```
+
 Use the following comments to start jupyter labs to run the notebook and
 interactively run the code
 

@@ -1,5 +1,8 @@
 '''
 Modual for testing churn_library.py
+
+Author: Bryan Travis Smith
+Updated: July 2023
 '''
 import os
 import logging

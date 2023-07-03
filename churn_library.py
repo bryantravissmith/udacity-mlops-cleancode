@@ -1,5 +1,8 @@
 """
 Module of functions for exploring data and fitting models for churn predicitons
+
+Author: Bryan Travis Smith
+Updated: July 2023
 """
 # import libraries
 import os
@@ -364,6 +367,6 @@ if __name__ == "__main__":
     bank_df = import_data("data/bank_data.csv")
     perform_eda(bank_df)
     x_train_bank, x_test_bank, y_train_bank, y_test_bank = (
-        perform_feature_engineering(bank_df.head(1000))
+        perform_feature_engineering(bank_df)
     )
     train_models(x_train_bank, x_test_bank, y_train_bank, y_test_bank)
